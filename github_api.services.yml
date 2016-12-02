@@ -5,3 +5,7 @@ services:
       - { name: cache.bin }
     factory: cache_factory:get
     arguments: [github_api]
+
+  github_api.manager:
+    class: Drupal\github_api\GithubApiManager.php
+    arguments: ['@config.factory', '@logger.factory']
