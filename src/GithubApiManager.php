@@ -70,7 +70,7 @@ class GithubApiManager {
 
   private function getClient() {
     $cache_obj = NULL;
-    $use_cache = $this->config->get('github_api_use_cache');
+    $use_cache = $this->config->get('use_cache');
     if ($use_cache === NULL) {
       $use_cache = TRUE;
     }
@@ -83,13 +83,13 @@ class GithubApiManager {
     $client = new Client($cache_obj);
 
     if ($this->useAuthenticatedCalls) {
-      $token = $this->config->get('github_api_token');
-      $user = $this->config->get('github_api_username');
+      $token = $this->config->get('token');
+      $user = $this->config->get('username');
       if ($token) {
         $client->authenticate($user, $token, Client::AUTH_HTTP_PASSWORD);
       }
       else {
-        $client->authenticate($user, $this->config->get('github_api_password'), Client::AUTH_HTTP_TOKEN);
+        $client->authenticate($user, $this->config->get('password'), Client::AUTH_HTTP_TOKEN);
       }
     }
 
@@ -109,7 +109,7 @@ class GithubApiManager {
    * @return string
    *   The oAuth token.
    */
-  public function githubApiGetToken($username, $password, $note = '') {
+  public function getToken($username, $password, $note = '') {
     $config = $this->configFactory->get('system.site');
 
     $client = new Client();
@@ -146,7 +146,7 @@ class GithubApiManager {
    *
    * @throws \Exception
    */
-  public function githubApiDiff($username, $repository, $base, $head) {
+  public function diff($username, $repository, $base, $head) {
     $client = $this->getClient();
     $response = $client->api('repo')->commits()->compare($username, $repository, $base, $head, 'application/vnd.github.v3.diff');
     return $response;
@@ -168,7 +168,7 @@ class GithubApiManager {
    *
    * @throws \Exception
    */
-  public function githubApiCreateBranch($username = NULL, $repository = NULL, $source = NULL, $destination = NULL) {
+  public function createBranch($username = NULL, $repository = NULL, $source = NULL, $destination = NULL) {
     $client = $this->getClient();
 
     try {
@@ -213,7 +213,7 @@ class GithubApiManager {
    *
    * @throws \Exception
    */
-  function githubApiMerge($username = NULL, $repository = NULL, $source = NULL, $destination = NULL, $message = NULL) {
+  function merge($username = NULL, $repository = NULL, $source = NULL, $destination = NULL, $message = NULL) {
     $client = $this->getClient();
 
     try {
@@ -256,7 +256,7 @@ class GithubApiManager {
    *
    * @throws \Exception
    */
-  function githubApiCreateOrMergeBranch($username = NULL, $repository = NULL, $source = NULL, $destination = NULL, $message = NULL) {
+  function createOrMergeBranch($username = NULL, $repository = NULL, $source = NULL, $destination = NULL, $message = NULL) {
     $client = $this->getClient();
 
     try {
@@ -308,7 +308,7 @@ class GithubApiManager {
    *
    * @return array
    */
-  function githubApiGetFile($username, $repository, $path, $reference) {
+  function getFile($username, $repository, $path, $reference) {
     $client = $this->getClient();
 
     try {
@@ -341,7 +341,7 @@ class GithubApiManager {
    *
    * @return array
    */
-  function githubApiPushCommit($username, $repository, $path, $content, $message, $sha, $branch, $committer) {
+  function pushCommit($username, $repository, $path, $content, $message, $sha, $branch, $committer) {
     $client = $this->getClient();
 
     try{

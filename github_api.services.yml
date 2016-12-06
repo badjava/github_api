@@ -7,5 +7,5 @@ services:
     arguments: [github_api]
 
   github_api.manager:
-    class: Drupal\github_api\GithubApiManager.php
+    class: Drupal\github_api\GithubApiManager
     arguments: ['@config.factory', '@logger.factory']

@@ -67,8 +67,9 @@ class SettingsForm extends ConfigFormBase {
     $username = $form_state->getValue('github_api_username');
     $password = $form_state->getValue('github_api_password');
     try {
+      $githubManager = \Drupal::service('github_api.manager');
       $config = $this->config('github_api.settings');
-      $token = github_api_get_token($username, $password);
+      $token = $githubManager->getToken($username, $password);
       $config->set('github_api_token', $token);
       $config->set('github_api_username', $username);
       $config->set('github_api_password', $password);
