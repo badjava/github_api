@@ -1,5 +1,5 @@
 {
-  "name":"drupal/github_api",
+  "name":"badjava/github_api",
   "description":"Access the github API from Drupal.",
   "type": "drupal-module",
   "license": "GPL-2.0+",
